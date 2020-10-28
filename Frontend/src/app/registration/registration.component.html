@@ -1,0 +1,80 @@
+<div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+          <hr>
+          <h1 >welcome to Registration page</h1>
+          <hr>
+        <form  [formGroup] = "form" (ngSubmit)="onSubmit()" #f="ngForm">
+          <div id="user-data">
+            <div class="form-group">
+              <label for="firstName">FIRST NAME:</label>
+              <input type="text" [class.is-invalid]="form.get('firstName').invalid && form.get('firstName').touched"id="firstName" class="form-control"formControlName="firstName">
+              <div *ngIf="form.get('firstName').invalid && form.get('firstName').touched">
+                <small CLASS="text-danger" *ngIf="form.get('firstName').errors?.required">PLEASE ENTER  FIRST NAME</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="lastName">LAST NAME:</label>
+                <input type="text" 
+                id="lastName" 
+                class="form-control"
+                formControlName="lastName" ngModel
+                required>
+                <div *ngIf="form.get('lastName').invalid && form.get('lastName').touched">
+                  <small CLASS="text-danger" *ngIf="form.get('firstName').errors?.required">PLEASE ENTER LAST NAME</small>
+                  </div>
+              </div>
+            <div class="form-group">
+              <label for="email">EMAIL</label>
+              <input type="email"
+               id="email" 
+               class="form-control"
+               formControlName="email"
+               required email>
+               <div *ngIf="form.get('email').invalid && form.get('email').touched">
+                <small CLASS="text-danger" *ngIf="form.get('email').errors?.required">PLEASE ENTER EMAIL ADDRESS</small>
+                <small CLASS="text-danger" *ngIf="form.get('email').errors?.pattern">PLEASE PROVIDE A VALID EMAIL ADDRESS</small>  
+              </div>
+            </div>
+            <div class="form-group">
+                <label for="phoneNumber">PHONE NUMBER:</label>
+                <input type="text"
+                 id="phoneNumber" 
+                 class="form-control"
+                 formControlName="phoneNumber"
+                 required >
+                 <div *ngIf="form.get('phoneNumber').invalid && form.get('phoneNumber').touched">
+                  <small CLASS="text-danger" *ngIf="form.get('phoneNumber').errors?.required">PLEASE ENTER PHONE NUMBER</small>
+                  <small CLASS="text-danger" *ngIf="form.get('phoneNumber').errors?.minlength">PLEASE PROVIDE A VALID MOBILE NUMBER</small>  
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="password">PASSWORD:</label>
+                <input type="password"
+                 id="password" 
+                 class="form-control"
+                 formControlName="password" 
+                 required  minlength="8">
+                 <div *ngIf="form.get('password').invalid && form.get('password').touched">
+                  <small CLASS="text-danger" *ngIf="form.get('password').errors?.required">PLEASE ENTER PASSWORD</small>
+                  <small CLASS="text-danger" *ngIf="form.get('password').errors?.minlength">PASSWORD MUST BE 8 CHARACTERS LONG</small>  
+                  <small CLASS="text-danger" *ngIf="form.get('password').errors?.pattern"> 
+                    <ul>
+                    <small>PASSWORD MUST CONTAIN THE FOLLOWING></small>
+                    <li><small>ATLEAST ONE LOWER CASE CHARACTER</small></li>
+                    <li><small>ATLEAST ONE UPPER CASE CHARACTER</small></li>
+                    <li><small>ATLEAST ONE  SPECIAL CHARACTER</small></li>
+                  </ul>
+                </small>  
+                </div>
+              </div>
+          </div>
+         
+          <button class="btn btn-primary"  type="submit">REGISTER</button>
+          
+          <button class="btn btn-primary" (click)="onClick()"  type="submit">LOGIN</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
