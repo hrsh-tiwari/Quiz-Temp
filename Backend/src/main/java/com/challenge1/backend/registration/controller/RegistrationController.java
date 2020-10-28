@@ -10,27 +10,30 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/register")
+// @RequestMapping("/register")
 public class RegistrationController {
 
     @Autowired
     private UserRepository userRepo;
 
-    @GetMapping("/hello")
-    public String hello() {
+    @GetMapping("/hello-reg")
+    public String helloRegister() {
 
-        System.out.println("Testing API...");
-        return "Hello!";
+        System.out.println("Testing Registration Controller...");
+        return "Hello Registration Controller!";
 
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<UserModel> signup(@RequestBody final UserModel signupUser) {
+    public ResponseEntity<String> signup(@RequestBody final UserModel signupUser) {
+
+        String message;
+
+        System.out.println("Testing Signup API...");
 
         try {
 
@@ -40,17 +43,18 @@ public class RegistrationController {
 
             if (tempUser != null) {
 
-                System.out.println("Signup with " + tempEmail + " : FAILURE");
-                System.out.println("[ REASON : User with " + tempEmail + " already exists! ]");
+                message = "Signup with " + tempEmail + " : FAILURE [ REASON : User with " + tempEmail + " already exists! ]";
+                System.out.println(message);
 
-                return new ResponseEntity<>(tempUser, HttpStatus.UNAUTHORIZED);
+                return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
             }
 
             tempUser = userRepo.save(signupUser);
 
-            System.out.println("Signup with " + tempEmail + " : SUCCESS");
+            message = "Signup with " + tempEmail + " : SUCCESS";
+            System.out.println(message);
 
-            return new ResponseEntity<>(tempUser, HttpStatus.CREATED);
+            return new ResponseEntity<>(message, HttpStatus.CREATED);
 
         } catch (Exception exc) {
 
@@ -61,7 +65,11 @@ public class RegistrationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserModel> login(@RequestBody final UserModel loginUser) {
+    public ResponseEntity<String> login(@RequestBody final UserModel loginUser) {
+
+        String message;
+
+        System.out.println("Testing Login API...");
 
         try {
 
@@ -72,25 +80,26 @@ public class RegistrationController {
 
             if (tempUser == null) {
 
-                System.out.println("Login with " + tempEmail + " : FAILURE");
-                System.out.println("[ REASON : User with " + tempEmail + " does not exist! ]");
+                message = "Login with " + tempEmail + " : FAILURE [ REASON : User with " + tempEmail + " does not exist! ]";
+                System.out.println(message);
 
-                return new ResponseEntity<>(tempUser, HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
 
             }
 
             if (!tempUser.getPassword().equals(tempPass)) {
 
-                System.out.println("Login with " + tempEmail + " : FAILURE");
-                System.out.println("[ REASON : Wrong password entered! ]");
+                message = "Login with " + tempEmail + " : FAILURE [ REASON : Wrong password entered! ]";
+                System.out.println(message);
 
-                return new ResponseEntity<>(tempUser, HttpStatus.UNAUTHORIZED);
+                return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
 
             }
 
-            System.out.println("Login with " + tempEmail + " : SUCCESS");
+            message = "Login with " + tempEmail + " : SUCCESS";
+            System.out.println(message);
 
-            return new ResponseEntity<>(tempUser, HttpStatus.OK);
+            return new ResponseEntity<>(message, HttpStatus.OK);
 
         } catch (Exception exc) {
 
