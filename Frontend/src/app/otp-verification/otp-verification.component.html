@@ -1,0 +1,41 @@
+<div class="text-center">
+    <h3>OTP Verification </h3>
+</div>
+  
+<form [formGroup]="form" #OtpInformation (ngSubmit)="OtpForm(OtpInformation)">    
+  <div class="row">  
+    <div class=" col-md-8 col-md-offset-2">  
+        <label for="otp">Enter  One Time Password Send to your Email Address</label> 
+         
+        <input formControlName="otp" class="form-control" type="text"> 
+        <span
+        *ngIf="!form.get('otp').valid && form.get('otp').touched && !form.get('otp').dirty"
+        class="help-block">OTP  is required !
+      </span>  
+    </div>    
+  </div> 
+  <div class="row">  
+    <div class=" col-md-8 col-md-offset-2">
+  <p *ngIf="!allowResendOTP">OTP Expires in <countdown [config]="{leftTime: 600}"></countdown>  min</p>
+  <p *ngIf="allowResendOTP">Please Generate new OTP your previous OTP is expired.</p>
+  <button class="btn btn-md btn-success btn-style pull-right" [disabled]="!form.valid">Submit</button>
+  </div>
+  </div>
+  <!--<div class="row" style="margin-top: 40px;">  
+    <div class="col-md-8 col-md-offset-2">  
+        <button class="btn btn-md btn-success btn-style pull-right" [disabled]="!form.valid">Submit</button>      
+    </div>  
+  </div>  -->
+</form>  
+<div class="row" style="margin-top: 40px;">  
+  <div class="col-md-8 col-md-offset-2">  
+      <button class="btn btn-primary btn-style pull-left" (click)="onCancel()">Cancel</button>
+      <div class="text-center col-md-8 col-md-offset-2">
+        <button class="btn btn-primary btn-style" 
+         [disabled]="!allowResendOTP"
+         (click)="onResend()">Resend OTP</button>
+      </div>
+  </div>  
+  
+</div>
+

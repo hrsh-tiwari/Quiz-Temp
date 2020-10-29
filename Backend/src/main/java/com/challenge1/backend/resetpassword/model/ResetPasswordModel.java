@@ -10,7 +10,7 @@ public class ResetPasswordModel {
 
     @Id
     private ObjectId id;
-    private String email;
+    private String emailId;
     private String token;
 
     public ResetPasswordModel() {
@@ -18,7 +18,7 @@ public class ResetPasswordModel {
 
     public ResetPasswordModel(ObjectId id, String email, String token) {
         this.id = id;
-        this.email = email;
+        this.emailId = email;
         this.token = token;
     }
 
@@ -31,11 +31,11 @@ public class ResetPasswordModel {
     }
 
     public String getEmail() {
-        return email;
+        return emailId;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.emailId = email;
     }
 
     public String getToken() {
@@ -48,7 +48,7 @@ public class ResetPasswordModel {
 
     @Override
     public String toString() {
-        return "ResetPasswordModel [email=" + email + ", id=" + id + ", token=" + token + "]";
+        return "ResetPasswordModel [email=" + emailId + ", id=" + id + ", token=" + token + "]";
     }
 
 }

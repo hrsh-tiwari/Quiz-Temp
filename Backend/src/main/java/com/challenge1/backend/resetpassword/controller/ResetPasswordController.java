@@ -44,7 +44,7 @@ public class ResetPasswordController {
 
         String message;
 
-        System.out.println("Testing Forgot Password API...");
+        System.out.println("Testing Forgot Password API..."+ resetUser);
 
         UserModel existingUser = null;
 
@@ -98,7 +98,7 @@ public class ResetPasswordController {
         System.out.println("Testing Verify OTP API...");
 
         ResetPasswordModel existingUser = null;
-
+        System.out.println(resetUser.getEmail() +"------" + resetUser.getToken());
         try {
 
             existingUser = resetRepo.findByEmailAndToken(resetUser.getEmail(), resetUser.getToken());

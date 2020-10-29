@@ -1,23 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
-import { HttpClient } from '@angular/common/http';  
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { OtpDetail } from '../classes/otp-detail';
+import { ResetPwdDetail } from '../classes/reset-pwd-detail';
+import { ForgotPwdService } from '../services/forgot-pwd.service';
 import { ConfirmedValidator } from './confirmed.validator';
-import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.css']
 })
-
 export class ResetPasswordComponent implements OnInit {
+  private resetPwdDetail = new ResetPwdDetail();  
+  private otpDetail = new OtpDetail();
 
-  constructor(private http: HttpClient,private fb: FormBuilder, private _router: Router) {
-  
-    
-  }
+  constructor(private forgotPwdService : ForgotPwdService, private router : Router,
+    private fb: FormBuilder) { }
+    form: FormGroup = new FormGroup({});
 
-  
   ngOnInit(): void {
     this.form = this.fb.group({
       password: ['', [Validators.required,Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]],
@@ -25,32 +26,52 @@ export class ResetPasswordComponent implements OnInit {
     }, { 
       validator: ConfirmedValidator('password', 'confirm_password')
     })
+    this.resetPwdDetail.emailId = history.state.email;
+    console.log(this.resetPwdDetail);
+  }
+   
+  onCancel(){
+    
   }
   public barLabel: string = "Password strength:";
-  resetSuccess=false;
-  form: FormGroup = new FormGroup({});
-  
-  
-    
   get f(){
     return this.form.controls;
   }
-  onConfirm(data: {password: string}){
-    console.log(this.form.value);
-    this.resetSuccess=true;
-    this.http.post('https://ng-complete-guide-1585c.firebaseio.com/password.json',data).subscribe(responseData =>
-     {console.log(responseData);});
-     
-    
+  ResetPwdForm(ResetPwdInformation)  
+  {     
+     {   
+        this.resetPwdDetail.password =this.Password.value;  
+        console.log(this.resetPwdDetail);
 
- 
-    }
- onCancel(){
-   this._router.navigate(['/login']);
- }
- onLogin(){
-  this._router.navigate(['/login']);
- }
   
-   
+        this.forgotPwdService.resetDetail(this.resetPwdDetail).subscribe(  
+          response => {  
+              let result = response.json();  
+  
+              if(result > 0)  
+              {  
+                this.router.navigateByUrl('/reset-success',{ state: { email: this.resetPwdDetail.emailId,passwod : 
+                this.resetPwdDetail.password}}); 
+              }  
+              else  
+              {  
+                  alert("Email id is not registered.")  
+              }  
+          },  
+          error => {  
+            alert("error occur while checking User. please try after sometime.")  
+          }  
+        );  
+        //to be removed
+        this.router.navigateByUrl('/reset-success',{ state: { email: this.resetPwdDetail.emailId,
+        password : this.resetPwdDetail.password}});
+          
+     }    
+  }    
+  get Password(){  
+      return this.form.get('password');  
+  }   
+  
+  
+
 }

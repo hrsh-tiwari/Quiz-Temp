@@ -14,11 +14,12 @@ public class UserModel {
     private String email;
     private Number number;
     private String password;
+    private String message;
 
     public UserModel() {
     }
 
-    public UserModel(String id, String firstName, String lastName, Number number, String password, String email) {
+    public UserModel(String id, String firstName, String lastName, Number number, String password, String email , String message) {
 
         this.id = id;
         this.firstName = firstName;
@@ -26,7 +27,7 @@ public class UserModel {
         this.email = email;
         this.number = number;
         this.password = password;
-
+        this.message=message;
     }
 
     public String getId() {
@@ -79,7 +80,15 @@ public class UserModel {
 
     @Override
     public String toString() {
-        return "LoginModel [email=" + email + ", firstName=" + firstName + ", id=" + id + ", lastName=" + lastName + ", number=" + number + ", password=" + password + "]";
+        return "LoginModel [email=" + email + ", firstName=" + firstName + ", id=" + id + ", lastName=" + lastName + ", message=" +message + ",number=" + number + ", password=" + password + "]";
     }
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
 }

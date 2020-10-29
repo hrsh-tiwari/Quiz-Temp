@@ -39,7 +39,15 @@ onSubmit(){
  console.log(this.form.value);
  this._RegistrationService.register(this.form.value)
  .subscribe(
-   (response) => console.log('success',response),
+   (response) => {
+    if(response=="SUCCESS"){
+      alert("REGISTERED SUCCESSFULLY")
+      this._router.navigate(['/login'])
+    } 
+    else {
+      alert("Registerd User")
+    }
+    console.log('success',response)},
    (error)=> console.log('error',error)
  );
 

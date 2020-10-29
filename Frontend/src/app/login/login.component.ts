@@ -51,7 +51,16 @@ export class LoginComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                    this.router.navigate([this.returnUrl]);
+                    if(data.message=="SUCCESS"){
+                        alert("LOGIN SUCCESSFULLY");
+                        // this.router.navigate(['/home']);
+                    }
+                    else if(data.message=="FAILURE")
+                    alert("EMAIL NOT FOUND");
+                    else{
+                        alert("Wrong Credentials");
+                    }
+                   
                 },
                 error => {
                     this.error = error;

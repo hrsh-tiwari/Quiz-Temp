@@ -29,9 +29,10 @@ public class RegistrationController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<String> signup(@RequestBody final UserModel signupUser) {
+    public ResponseEntity<UserModel> signup(@RequestBody final UserModel signupUser) {
 
         String message;
+        UserModel m= new UserModel();
 
         System.out.println("Testing Signup API...");
 
@@ -40,35 +41,40 @@ public class RegistrationController {
             String tempEmail = signupUser.getEmail();
 
             UserModel tempUser = userRepo.findByEmail(tempEmail);
-
+            System.out.println(tempUser);
             if (tempUser != null) {
 
-                message = "Signup with " + tempEmail + " : FAILURE [ REASON : User with " + tempEmail + " already exists! ]";
-                System.out.println(message);
+                message ="FAILURE";
+//                System.out.println(message);
+                m.setMessage(message);
 
-                return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
+//                return m;
+//                return new ResponseEntity<>(m, HttpStatus.UNAUTHORIZED);
             }
-
+            else {
             tempUser = userRepo.save(signupUser);
 
-            message = "Signup with " + tempEmail + " : SUCCESS";
+            message ="SUCCESS";
             System.out.println(message);
+            m.setMessage(message);
 
-            return new ResponseEntity<>(message, HttpStatus.CREATED);
-
+//            return new ResponseEntity<>(m, HttpStatus.CREATED);
+//            return m;
+            }
         } catch (Exception exc) {
 
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 
         }
-
+        
+        return new ResponseEntity<>(m, HttpStatus.OK);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody final UserModel loginUser) {
+    public ResponseEntity<UserModel> login(@RequestBody final UserModel loginUser) {
 
         String message;
-
+        UserModel m = new UserModel();
         System.out.println("Testing Login API...");
 
         try {
@@ -80,33 +86,33 @@ public class RegistrationController {
 
             if (tempUser == null) {
 
-                message = "Login with " + tempEmail + " : FAILURE [ REASON : User with " + tempEmail + " does not exist! ]";
-                System.out.println(message);
+                m.setMessage("FAILURE");
+//                System.out.println(message);
 
-                return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(m, HttpStatus.OK);
 
             }
 
             if (!tempUser.getPassword().equals(tempPass)) {
 
-                message = "Login with " + tempEmail + " : FAILURE [ REASON : Wrong password entered! ]";
-                System.out.println(message);
+            	 m.setMessage("FAILURE1");
+            	 System.out.println("FAILURE 1");
 
-                return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
+                return new ResponseEntity<>(m, HttpStatus.OK);
 
             }
 
-            message = "Login with " + tempEmail + " : SUCCESS";
-            System.out.println(message);
+            m.setMessage("SUCCESS");
+            System.out.println("SUCCESS");
 
-            return new ResponseEntity<>(message, HttpStatus.OK);
+//            return new ResponseEntity<>(message, HttpStatus.OK);
 
         } catch (Exception exc) {
-
+        	System.out.println(exc);
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 
         }
-
+        return new ResponseEntity<>(m, HttpStatus.OK);
     }
 
 }
