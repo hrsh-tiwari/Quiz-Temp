@@ -10,16 +10,20 @@ public class ResetPasswordModel {
 
     @Id
     private ObjectId id;
+    private String message;
     private String emailId;
-    private String token;
+    private String otp;
+
 
     public ResetPasswordModel() {
     }
 
-    public ResetPasswordModel(ObjectId id, String email, String token) {
+
+    public ResetPasswordModel(ObjectId id, String message, String emailId, String otp) {
         this.id = id;
-        this.emailId = email;
-        this.token = token;
+        this.message = message;
+        this.emailId = emailId;
+        this.otp = otp;
     }
 
     public ObjectId getId() {
@@ -30,25 +34,34 @@ public class ResetPasswordModel {
         this.id = id;
     }
 
-    public String getEmail() {
+    public String getEmailId() {
         return emailId;
     }
 
-    public void setEmail(String email) {
-        this.emailId = email;
+    public void setEmailId(String emailId) {
+        this.emailId = emailId;
     }
 
-    public String getToken() {
-        return token;
+    public String getOtp() {
+        return otp;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setOtp(String otp) {
+        this.otp = otp;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     @Override
     public String toString() {
-        return "ResetPasswordModel [email=" + emailId + ", id=" + id + ", token=" + token + "]";
+        return "ResetPasswordModel [emailId=" + emailId + ", id=" + id + ", message=" + message + ", otp=" + otp
+                + "]";
     }
 
 }

@@ -38,9 +38,9 @@ public class RegistrationController {
 
         try {
 
-            String tempEmail = signupUser.getEmail();
+            String tempEmail = signupUser.getEmailId();
 
-            UserModel tempUser = userRepo.findByEmail(tempEmail);
+            UserModel tempUser = userRepo.findByEmailId(tempEmail);
             System.out.println(tempUser);
             if (tempUser != null) {
 
@@ -79,10 +79,10 @@ public class RegistrationController {
 
         try {
 
-            String tempEmail = loginUser.getEmail();
+            String tempEmail = loginUser.getEmailId();
             String tempPass = loginUser.getPassword();
 
-            UserModel tempUser = userRepo.findByEmail(tempEmail);
+            UserModel tempUser = userRepo.findByEmailId(tempEmail);
 
             if (tempUser == null) {
 

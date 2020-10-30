@@ -40,20 +40,35 @@ export class ForgotPasswordComponent implements OnInit {
   
         this.forgotPwdService.saveAdminDetails(this.emailDetail).subscribe(  
           response => {  
-              let result = response.json();  
-  
-              if(result > 0)  
-              {  
-                this.router.navigateByUrl('/otp-verify',{ state: { email: this.emailDetail.emailId}}); 
-              }  
-              else  
-              {  
-                  alert("Email id is not registered.")  
-              }  
-          },  
-          error => {  
-            alert("error occur while checking User. please try after sometime.")  
-          }  
+              //let result = response.json();  
+
+              //(response) => {
+                console.log(response)
+                if(response=="SUCCESS"){
+                  alert("OTP Generated SUCCESSFULLY")
+                  //this.router.navigate(['/login'])
+                  this.router.navigateByUrl('/otp-verify',{ state: { email: this.emailDetail.emailId}}); 
+                } 
+                else {
+                  alert("User does not exist!")
+                }
+                console.log('success',response)},
+               (error)=> console.log('error',error)
+
+
+
+              //if(result > 0)  
+              //{  
+                //this.router.navigateByUrl('/otp-verify',{ state: { email: this.emailDetail.emailId}}); 
+            //  }  
+              //else  
+             // {  
+               //   alert("Email id is not registered.")  
+             // }  
+        //  },  
+          //error => {  
+            //alert("error occur while checking User. please try after sometime.")  
+         // }  
         );  
         //to be removed
         // this.router.navigateByUrl('/otp-verify',{ state: { email: this.emailDetail.emailId}});

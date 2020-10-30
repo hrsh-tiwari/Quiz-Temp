@@ -35,36 +35,24 @@ export class OtpVerificationComponent implements OnInit {
   
   
   OtpForm(OtpInformation)  
-  {     
-     {   
-        this.otpDetail.otp = this.Otp.value; 
-        
+  {
+     {
+        this.otpDetail.otp = this.Otp.value;
         console.log(this.otpDetail);
-
-  
         this.forgotPwdService.verifyOtp(this.otpDetail).subscribe(  
-          response => {  
-              let result = response.json();  
-  
-              if(result > 0)  
-              {  
-                this.router.navigateByUrl('/reset-pwd',{ state: { email: this.emailDetail.emailId}});  
-              }  
-              else  
-              {  
-                  alert("Wrong OTP.")  
-              }  
-          },  
-          error => {  
-            alert("error occur while sending OTP. please try after sometime.")  
-          }  
-        );  
-        //to be removed
-        this.router.navigateByUrl('/reset-pwd',{ state: { email: this.emailDetail.emailId}}); 
+        response => {
+                if(response=="SUCCESS"){
+                  alert("OTP Verified SUCCESSFULLY")
+                  this.router.navigateByUrl('/reset-pwd',{ state: { email: this.emailDetail.emailId}}); 
+                } 
+                else {
+                  alert("TRY AGAIN")
+                }
+                console.log('success',response)
+              },
+               (error)=> console.log('error',error)
+        )
         
-        
-
-          
      }    
   } 
   onResend()   {

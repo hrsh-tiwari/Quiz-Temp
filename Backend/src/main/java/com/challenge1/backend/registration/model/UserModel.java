@@ -11,7 +11,7 @@ public class UserModel {
     private String id;
     private String firstName;
     private String lastName;
-    private String email;
+    private String emailId;
     private Number number;
     private String password;
     private String message;
@@ -19,12 +19,12 @@ public class UserModel {
     public UserModel() {
     }
 
-    public UserModel(String id, String firstName, String lastName, Number number, String password, String email , String message) {
+    public UserModel(String id, String firstName, String lastName, Number number, String password, String emailId , String message) {
 
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
+        this.emailId = emailId;
         this.number = number;
         this.password = password;
         this.message=message;
@@ -54,12 +54,12 @@ public class UserModel {
         this.lastName = lastName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getEmailId() {
+        return emailId;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmailId(String emailId) {
+        this.emailId = emailId;
     }
 
     public Number getNumber() {
@@ -80,7 +80,7 @@ public class UserModel {
 
     @Override
     public String toString() {
-        return "LoginModel [email=" + email + ", firstName=" + firstName + ", id=" + id + ", lastName=" + lastName + ", message=" +message + ",number=" + number + ", password=" + password + "]";
+        return "LoginModel [emailId=" + emailId + ", firstName=" + firstName + ", id=" + id + ", lastName=" + lastName + ", message=" +message + ",number=" + number + ", password=" + password + "]";
     }
 
 	public String getMessage() {

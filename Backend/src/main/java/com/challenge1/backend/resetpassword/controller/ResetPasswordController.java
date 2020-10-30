@@ -40,9 +40,11 @@ public class ResetPasswordController {
     }
 
     @PostMapping("/forgot-password")
-    public ResponseEntity<String> sendOTP(@RequestBody final ResetPasswordModel resetUser) {
+    public ResponseEntity<ResetPasswordModel> sendOTP(@RequestBody final ResetPasswordModel resetUser) {
 
         String message;
+
+        ResetPasswordModel resModel = new ResetPasswordModel();
 
         System.out.println("Testing Forgot Password API..."+ resetUser);
 
@@ -51,7 +53,7 @@ public class ResetPasswordController {
         // Check if the Email is valid or not
         try {
 
-            existingUser = userRepo.findByEmail(resetUser.getEmail());
+            existingUser = userRepo.findByEmailId(resetUser.getEmailId());
 
             // System.out.println("Existing User : " + existingUser);
 
@@ -63,93 +65,106 @@ public class ResetPasswordController {
 
             String otp = String.valueOf(generateOTP(6));
 
-            ResetPasswordModel otpUser = resetRepo.findByEmail(resetUser.getEmail());
+            ResetPasswordModel otpUser = resetRepo.findByEmailId(resetUser.getEmailId());
 
             if (otpUser == null) otpUser = resetUser;
 
-            otpUser.setToken(otp);
+            otpUser.setOtp(otp);
 
             try {
 
                 resetRepo.save(otpUser);
-                emailSender.sendEmail(otpUser.getEmail(), String.valueOf(otp));
+                emailSender.sendEmail(otpUser.getEmailId(), String.valueOf(otp));
 
             } catch (Exception exc) { exc.printStackTrace(); }
 
-            message = "Send OTP to " + otpUser.getEmail() + " : SUCCESS";
+            message = "SUCCESS";
+            resModel.setMessage(message);
             System.out.println(message);
 
-            return new ResponseEntity<>(message, HttpStatus.OK);
+            return new ResponseEntity<>(resModel, HttpStatus.OK);
 
         }
 
-        message = "Send OTP to " + resetUser.getEmail() + " : FAILURE [ REASON : User with " + resetUser.getEmail() + " does not exist! ]";
+        message = "FAILURE";
+        resModel.setMessage(message);
         System.out.println(message);
 
-        return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(resModel, HttpStatus.OK);
 
     }
 
     @PostMapping("/verify-otp")
-    public ResponseEntity<String> verifyOTP(@RequestBody final ResetPasswordModel resetUser) {
+    public ResponseEntity<ResetPasswordModel> verifyOTP(@RequestBody final ResetPasswordModel resetUser) {
 
         String message;
+        ResetPasswordModel resModel = new ResetPasswordModel();
 
         System.out.println("Testing Verify OTP API...");
 
         ResetPasswordModel existingUser = null;
-        System.out.println(resetUser.getEmail() +"------" + resetUser.getToken());
+        System.out.println(resetUser.getEmailId() +"------" + resetUser.getOtp());
         try {
 
-            existingUser = resetRepo.findByEmailAndToken(resetUser.getEmail(), resetUser.getToken());
-            resetRepo.delete(existingUser);
-
-            // System.out.println("Existing User : " + existingUser);
+            existingUser = resetRepo.findByEmailIdAndOtp(resetUser.getEmailId(), resetUser.getOtp());
+            // System.out.println("Heloooooo "+existingUser);
 
         } catch (Exception exc) { exc.printStackTrace(); }
 
         if (existingUser != null) {
 
-            message = "OTP Verification with " + existingUser.getEmail() + " : SUCCESS";
+            message = "SUCCESS";
+            resModel.setMessage(message);
             System.out.println(message);
 
-            return new ResponseEntity<>(message, HttpStatus.OK);
+            resetRepo.delete(existingUser);
+
+            // return new ResponseEntity<>(resModel, HttpStatus.OK);
+
+        } else {
+
+            message = "FAILURE";
+            resModel.setMessage(message);
+            System.out.println(message);
 
         }
 
-        message = "OTP Verification with " + resetUser.getEmail() + " : FAILURE [ REASON : Wrong OTP entered! ]";
-        System.out.println(message);
-
-        return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(resModel, HttpStatus.OK);
 
     }
 
     @PutMapping("/reset-password")
-    public ResponseEntity<String> resetPassword(@RequestBody final UserModel resetPasswordUser) {
+    public ResponseEntity<ResetPasswordModel> resetPassword(@RequestBody final UserModel resetPasswordUser) {
 
         String message;
-
+        ResetPasswordModel resModel = new ResetPasswordModel();
         System.out.println("Testing Reset Password API...");
 
         UserModel recentUser;
 
         try {
-
-            recentUser = userRepo.findByEmail(resetPasswordUser.getEmail());
-
+            System.out.println(resetPasswordUser.getEmailId());
+            recentUser = userRepo.findByEmailId(resetPasswordUser.getEmailId());
+            System.out.println(recentUser);
             recentUser.setPassword(resetPasswordUser.getPassword());
             userRepo.save(recentUser);
 
             // System.out.println("Existing User : " + recentUser);
 
-            message = "Password Reset with " + recentUser.getEmail() + " : SUCCESS";
+            message = "SUCCESS";
+            resModel.setMessage(message);
             System.out.println(message);
 
-            return new ResponseEntity<>(message, HttpStatus.OK);
+            //return new ResponseEntity<>(message, HttpStatus.OK);
 
-        } catch (Exception exc) { exc.printStackTrace(); }
-
-        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception exc) { 
+            //exc.printStackTrace(); 
+            message = "FAILURE";
+            System.out.println("Inside catch block");
+            resModel.setMessage(message);
+        }
+        
+        return new ResponseEntity<>(resModel, HttpStatus.OK);
 
     }
 

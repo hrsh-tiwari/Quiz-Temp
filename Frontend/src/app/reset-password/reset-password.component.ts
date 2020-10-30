@@ -46,26 +46,20 @@ export class ResetPasswordComponent implements OnInit {
   
         this.forgotPwdService.resetDetail(this.resetPwdDetail).subscribe(  
           response => {  
-              let result = response.json();  
-  
-              if(result > 0)  
-              {  
-                this.router.navigateByUrl('/reset-success',{ state: { email: this.resetPwdDetail.emailId,passwod : 
-                this.resetPwdDetail.password}}); 
-              }  
-              else  
-              {  
-                  alert("Email id is not registered.")  
-              }  
-          },  
-          error => {  
-            alert("error occur while checking User. please try after sometime.")  
-          }  
-        );  
-        //to be removed
-        this.router.navigateByUrl('/reset-success',{ state: { email: this.resetPwdDetail.emailId,
-        password : this.resetPwdDetail.password}});
-          
+              //let result = response.json();  
+              //(response) => {
+                if(response=="SUCCESS"){
+                  alert("RESET SUCCESSFULLY")
+                  //this.router.navigate(['/login'])
+                  this.router.navigateByUrl('/reset-success',{ state: { email: this.resetPwdDetail.emailId,passwod : 
+                    this.resetPwdDetail.password}}); 
+                } 
+                else {
+                  alert("TRY AGAIN")
+                }
+                console.log('success',response)},
+               (error)=> console.log('error',error)
+        ) 
      }    
   }    
   get Password(){  
