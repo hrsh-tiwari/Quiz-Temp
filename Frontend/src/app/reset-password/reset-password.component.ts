@@ -27,7 +27,8 @@ export class ResetPasswordComponent implements OnInit {
       validator: ConfirmedValidator('password', 'confirm_password')
     })
     this.resetPwdDetail.emailId = history.state.email;
-    console.log(this.resetPwdDetail);
+    console.log(history.state.email)
+    console.log(this.resetPwdDetail)
   }
    
   onCancel(){
@@ -51,7 +52,7 @@ export class ResetPasswordComponent implements OnInit {
                 if(response=="SUCCESS"){
                   alert("RESET SUCCESSFULLY")
                   //this.router.navigate(['/login'])
-                  this.router.navigateByUrl('/reset-success',{ state: { email: this.resetPwdDetail.emailId,passwod : 
+                  this.router.navigateByUrl('/reset-success',{ state: { email: this.resetPwdDetail.emailId,password : 
                     this.resetPwdDetail.password}}); 
                 } 
                 else {

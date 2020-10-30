@@ -43,6 +43,7 @@ export class ForgotPwdService {
   {
     let url = this.baseUrl + "verify-otp";  
       //return this.http.post(url,token); 
+      console.log(token)
       return this.http.post(url,token).pipe(map((response: any) => {
         return(response.message)
        
@@ -56,7 +57,7 @@ export class ForgotPwdService {
   {
     let url = this.baseUrl + "reset-password";  
       //return this.http.post(url,resetPwdDetail); 
-      return this.http.post(url,resetPwdDetail).pipe(map((response: any) => {
+      return this.http.put(url,resetPwdDetail).pipe(map((response: any) => {
         return(response.message)
     }),catchError((err: any) => {
          return throwError(err);

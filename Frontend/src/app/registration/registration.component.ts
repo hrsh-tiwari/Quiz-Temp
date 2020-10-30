@@ -14,8 +14,8 @@ export class RegistrationComponent implements OnInit {
     this.form = this.fb.group({
       firstName:['',Validators.required],
       lastName:['',Validators.required],
-      email:['',[Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
-      phoneNumber:['',[Validators.required,Validators.minLength(10)]],
+      emailId:['',[Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+      number:['',[Validators.required,Validators.minLength(10)]],
       password:['',[Validators.required, Validators.minLength(8),Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]]
 
 
@@ -25,15 +25,7 @@ export class RegistrationComponent implements OnInit {
  
   ngOnInit(): void {
   }
-/*onSubmit(){
-var formData: any = new FormData();
- formData.append("firstName", this.form.get('firstName').value);
 
-  this.http.post('http://localhost:3000', formData).subscribe(
-    (response) => console.log(response),
-    (error) => console.log(error)
-  );
-}*/
 
 onSubmit(){
  console.log(this.form.value);

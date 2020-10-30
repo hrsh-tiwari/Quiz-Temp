@@ -25,27 +25,27 @@
                   </div>
               </div>
             <div class="form-group">
-              <label for="email">EMAIL</label>
-              <input type="email"
-               id="email" 
+              <label for="emailId">EMAIL</label>
+              <input type="text"
+               id="emailId" 
                class="form-control"
-               formControlName="email"
+               formControlName="emailId"
                required email>
-               <div *ngIf="form.get('email').invalid && form.get('email').touched">
-                <small CLASS="text-danger" *ngIf="form.get('email').errors?.required">PLEASE ENTER EMAIL ADDRESS</small>
-                <small CLASS="text-danger" *ngIf="form.get('email').errors?.pattern">PLEASE PROVIDE A VALID EMAIL ADDRESS</small>  
+               <div *ngIf="form.get('emailId').invalid && form.get('emailId').touched">
+                <small CLASS="text-danger" *ngIf="form.get('emailId').errors?.required">PLEASE ENTER EMAIL ADDRESS</small>
+                <small CLASS="text-danger" *ngIf="form.get('emailId').errors?.pattern">PLEASE PROVIDE A VALID EMAIL ADDRESS</small>  
               </div>
             </div>
             <div class="form-group">
-                <label for="phoneNumber">PHONE NUMBER:</label>
+                <label for="number">PHONE NUMBER:</label>
                 <input type="text"
-                 id="phoneNumber" 
+                 id="number" 
                  class="form-control"
-                 formControlName="phoneNumber"
+                 formControlName="number"
                  required >
-                 <div *ngIf="form.get('phoneNumber').invalid && form.get('phoneNumber').touched">
-                  <small CLASS="text-danger" *ngIf="form.get('phoneNumber').errors?.required">PLEASE ENTER PHONE NUMBER</small>
-                  <small CLASS="text-danger" *ngIf="form.get('phoneNumber').errors?.minlength">PLEASE PROVIDE A VALID MOBILE NUMBER</small>  
+                 <div *ngIf="form.get('number').invalid && form.get('number').touched">
+                  <small CLASS="text-danger" *ngIf="form.get('number').errors?.required">PLEASE ENTER PHONE NUMBER</small>
+                  <small CLASS="text-danger" *ngIf="form.get('number').errors?.minlength">PLEASE PROVIDE A VALID MOBILE NUMBER</small>  
                 </div>
               </div>
               <div class="form-group">

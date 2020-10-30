@@ -21,7 +21,7 @@ export class AuthenticationService {
         return this.currentUserSubject.value;
     }
 
-     login(email: string, password: string) {
+     login(emailId: string, password: string) {
     //     return this.http.post<any>(`${environment.apiUrl}/login`, { email, password })
     //         .pipe(map(user => {
     //             // store user details and basic auth credentials in local storage to keep user logged in between page refreshes
@@ -31,7 +31,7 @@ export class AuthenticationService {
     //             console.log(user);
     //             return user;
     //         }));
-    return this.http.post(`${environment.apiUrl}/login`, { email, password }).pipe(map((response: any) => {
+    return this.http.post(`${environment.apiUrl}/login`, { emailId, password }).pipe(map((response: any) => {
         // const data = response.json();
         // console.log("andr aa gya ")
         return(response)

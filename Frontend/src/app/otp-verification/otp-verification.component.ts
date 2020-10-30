@@ -20,17 +20,17 @@ export class OtpVerificationComponent implements OnInit {
   ngOnInit(): void {
     this.otpDetail.emailId = history.state.email;
     this.emailDetail.emailId=this.otpDetail.emailId;
-    console.log(this.otpDetail.emailId);
+    console.log(this.otpDetail.emailId)
     
     setTimeout(() => {
       this.allowResendOTP=true;
-    },600000);
+    },6000);
   }
   form = new FormGroup({    
     otp : new FormControl('' ,[Validators.required,Validators.pattern("^[0-9]{6}$")] ),      
   });  
   onCancel(){
-    this.router.navigate(['']);
+    this.router.navigate(['/login']);
   }
   
   

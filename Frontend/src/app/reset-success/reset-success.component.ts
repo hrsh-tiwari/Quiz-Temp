@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reset-success',
@@ -7,11 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ResetSuccessComponent implements OnInit {
 
-  constructor() { }
+  constructor(private route:Router) { }
 
   ngOnInit(): void {
   }
   onCancel(){
+
+    this.route.navigate(['/login'])
     
   }
 

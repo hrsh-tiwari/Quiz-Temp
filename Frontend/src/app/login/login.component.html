@@ -1,4 +1,4 @@
-﻿<<div class="col-md-6 offset-md-3 mt-5">
+﻿<div class="col-md-6 offset-md-3 mt-5">
     <!-- <div class="alert alert-info">
         Username: test<br />
         Password: test
@@ -8,7 +8,7 @@
         <div class="card-body">
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                 <div class="form-group">
-                    <label for="username">Username</label>
+                    <label for="username">Email</label>
                     <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
                     <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
                         <div *ngIf="f.username.errors.required">Username is required</div>
@@ -30,6 +30,9 @@
                 <button (click)="onForget()" class="btn btn-primary">
                     Forget Password
                 </button>
+                <hr>
+                <a href="http://localhost:4200/registration" class="pull-right">
+                New user? Signup</a>
                 <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
             </form>
         </div>
